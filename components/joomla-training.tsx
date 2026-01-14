@@ -318,13 +318,15 @@ export default function JoomlaTrainingPresentation() {
             <div className="text-4xl md:text-5xl lg:text-6xl mb-4 animate-bounce-subtle">
               {slide.icon}
             </div>
-            <div 
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-4"
-              style={{ backgroundColor: `${colors.secondary}30`, color: colors.coral }}
-            >
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colors.secondary }} />
-              MODULE {String(slide.id).padStart(2, '0')}
-            </div>
+            {slide.id !== 15 && (
+              <div 
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-4"
+                style={{ backgroundColor: `${colors.secondary}30`, color: colors.coral }}
+              >
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colors.secondary }} />
+                MODULE {String(slide.id).padStart(2, '0')}
+              </div>
+            )}
             <h1 
               className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-extrabold leading-none tracking-tight mb-2"
               style={{color: colors.primary}}
