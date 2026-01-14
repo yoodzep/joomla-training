@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-
-
+import { useState, useEffect, useCallback } from 'react';
 
 const slides = [
   {
@@ -14,7 +12,6 @@ const slides = [
       "Navigating the administrator dashboard",
       "User roles, permissions, and access levels explained",
       "Essential settings and global configuration overview",
-      
     ],
     icon: "🚀"
   },
@@ -38,7 +35,7 @@ const slides = [
       "J2Store dashboard overview and key features",
       "Understanding store configuration and settings",
       "Payment gateway setup and management",     
-          ],
+    ],
     icon: "🛒"
   },
   {
@@ -60,8 +57,8 @@ const slides = [
     subtitle: "Generation",
     content: [
       "Using Akeeba Backup for complete site backups",
-       "Downloading and storing backups",
-          ],
+      "Downloading and storing backups",
+    ],
     icon: "💾"
   },
   {
@@ -72,7 +69,7 @@ const slides = [
       "Locating existing images in the Media Manager",
       "Best practices for image optimisation",
       "Supported formats and size recommendations",
-          ],
+    ],
     icon: "🖼️"
   },
   {
@@ -131,7 +128,7 @@ const slides = [
       "Planning page structure and content hierarchy",
       "Creating articles with custom layouts",
       "Assigning to menus for navigation",
-          ],
+    ],
     icon: "🌐"
   },
   {
@@ -147,7 +144,6 @@ const slides = [
     ],
     icon: "📁"
   },
-  
   {
     id: 13,
     title: "Menu Structure",
@@ -207,52 +203,50 @@ const slides = [
     content: [
       "Extension conflicts and debugging",
       "Cache clearing and performance issues",
-         ],
+    ],
     icon: "🛠️"
   }
 ];
 
-// KSHE Training colour palette
 const colors = {
-  primary: '#7B8CDE',      // Lavender/periwinkle blue (main text)
-  secondary: '#F5A4A4',    // Coral pink (decorative)
-  accent: '#9BD4E4',       // Light blue (waves/accents)
-  background: '#FFFFFF',   // White background
-  textDark: '#5B6BC0',     // Darker lavender for headings
-  textLight: '#8E99C9',    // Lighter lavender for secondary text
-  coral: '#E8847C',        // Darker coral for emphasis
+  primary: '#7B8CDE',
+  secondary: '#F5A4A4',
+  accent: '#9BD4E4',
+  background: '#FFFFFF',
+  textDark: '#5B6BC0',
+  textLight: '#8E99C9',
+  coral: '#E8847C',
 };
 
 export default function JoomlaTrainingPresentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [direction, setDirection] = useState('next');
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
- // Added ': number' to define the type of the index parameter
-const goToSlide = (index: number) => {
-  if (isAnimating || index === currentSlide) return;
-  setDirection(index > currentSlide ? 'next' : 'prev');
-  setIsAnimating(true);
-  setTimeout(() => {
-    setCurrentSlide(index);
-    setIsAnimating(false);
-  }, 300);
-};
+  const goToSlide = useCallback((index: number) => {
+    if (isAnimating || index === currentSlide) return;
+    setDirection(index > currentSlide ? 'next' : 'prev');
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentSlide(index);
+      setIsAnimating(false);
+    }, 300);
+  }, [currentSlide, isAnimating]);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     if (currentSlide < slides.length - 1) {
       goToSlide(currentSlide + 1);
     }
-  };
+  }, [currentSlide, goToSlide]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     if (currentSlide > 0) {
       goToSlide(currentSlide - 1);
     }
-  };
+  }, [currentSlide, goToSlide]);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault();
         nextSlide();
@@ -264,7 +258,7 @@ const goToSlide = (index: number) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlide, isAnimating]);
+  }, [nextSlide, prevSlide]);
 
   const slide = slides[currentSlide];
 
@@ -317,17 +311,9 @@ const goToSlide = (index: number) => {
       <svg className="absolute bottom-20 left-24 w-12 h-6 animate-wave" style={{animationDelay: '0.5s'}} viewBox="0 0 60 20" fill="none">
         <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
       </svg>
-      <svg className="absolute top-1/2 right-32 w-10 h-5 animate-wave" style={{animationDelay: '1s'}} viewBox="0 0 60 20" fill="none">
-        <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
-      </svg>
-      <svg className="absolute bottom-48 right-1/4 w-14 h-7 animate-wave" style={{animationDelay: '1.5s'}} viewBox="0 0 60 20" fill="none">
-        <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
-      </svg>
 
-      {/* Header with Yoonet logo style */}
       <header className="relative z-10 flex items-center justify-between px-4 py-4 md:px-8 md:py-5">
         <div className="flex items-center gap-2 md:gap-3">
-          {/* Y logo similar to Yoonet branding */}
           <div className="flex items-end">
             <span className="text-3xl md:text-4xl font-bold" style={{color: colors.primary}}>Y</span>
             <span className="w-2 h-2 rounded-full mb-1 ml-0.5" style={{backgroundColor: colors.secondary}}></span>
@@ -349,19 +335,12 @@ const goToSlide = (index: number) => {
         </div>
       </header>
 
-      {/* Main content */}
       <div className="relative z-10 flex flex-col lg:flex-row min-h-[calc(100vh-140px)] px-4 md:px-8 lg:px-16 py-4 md:py-8">
-        {/* Left side - Title */}
         <div className="flex-1 flex flex-col justify-center mb-6 lg:mb-0 lg:pr-10">
-          <div 
-            className={`transition-all duration-500 ${isAnimating ? (direction === 'next' ? 'opacity-0 -translate-x-8' : 'opacity-0 translate-x-8') : 'opacity-100 translate-x-0'}`}
-          >
-            {/* Icon */}
+          <div className={`transition-all duration-500 ${isAnimating ? (direction === 'next' ? 'opacity-0 -translate-x-8' : 'opacity-0 translate-x-8') : 'opacity-100 translate-x-0'}`}>
             <div className="text-4xl md:text-5xl lg:text-6xl mb-4 animate-bounce-subtle">
               {slide.icon}
             </div>
-
-            {/* Module label */}
             <div 
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-4"
               style={{ backgroundColor: `${colors.secondary}30`, color: colors.coral }}
@@ -369,8 +348,6 @@ const goToSlide = (index: number) => {
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colors.secondary }} />
               MODULE {String(slide.id).padStart(2, '0')}
             </div>
-
-            {/* Title */}
             <h1 
               className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-extrabold leading-none tracking-tight mb-2"
               style={{color: colors.primary}}
@@ -388,11 +365,8 @@ const goToSlide = (index: number) => {
           </div>
         </div>
 
-        {/* Right side - Content */}
         <div className="flex-1 flex flex-col justify-center lg:pl-10 lg:border-l" style={{borderColor: `${colors.primary}20`}}>
-          <div 
-            className={`transition-all duration-500 delay-100 ${isAnimating ? (direction === 'next' ? 'opacity-0 translate-x-8' : 'opacity-0 -translate-x-8') : 'opacity-100 translate-x-0'}`}
-          >
+          <div className={`transition-all duration-500 delay-100 ${isAnimating ? (direction === 'next' ? 'opacity-0 translate-x-8' : 'opacity-0 -translate-x-8') : 'opacity-100 translate-x-0'}`}>
             <h3 className="text-xs font-bold tracking-widest mb-5" style={{color: colors.textLight}}>
               WHAT YOU'LL LEARN
             </h3>
@@ -425,10 +399,8 @@ const goToSlide = (index: number) => {
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-white via-white/95 to-transparent pt-10 pb-4 px-4 md:px-8">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
-          {/* Prev/Next buttons */}
           <div className="flex items-center gap-2">
             <button
               onClick={prevSlide}
@@ -455,7 +427,6 @@ const goToSlide = (index: number) => {
             </button>
           </div>
 
-          {/* Slide dots */}
           <div className="hidden md:flex items-center gap-1.5 flex-wrap justify-center max-w-sm">
             {slides.map((s, index) => (
               <button
@@ -471,7 +442,6 @@ const goToSlide = (index: number) => {
             ))}
           </div>
 
-          {/* Keyboard hint */}
           <div className="hidden lg:flex items-center gap-1.5 text-xs" style={{color: colors.textLight}}>
             <kbd className="px-2 py-1 rounded font-mono text-xs" style={{backgroundColor: `${colors.primary}15`}}>←</kbd>
             <kbd className="px-2 py-1 rounded font-mono text-xs" style={{backgroundColor: `${colors.primary}15`}}>→</kbd>
