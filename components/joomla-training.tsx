@@ -11,10 +11,10 @@ const slides = [
     subtitle: "Introduction & Fundamentals",
     content: [
       "Understanding the Joomla 3 architecture and core concepts",
-      "Navigating the administrator dashboard with confidence",
+      "Navigating the administrator dashboard",
       "User roles, permissions, and access levels explained",
       "Essential settings and global configuration overview",
-      "Best practices for maintaining your Joomla installation"
+      
     ],
     icon: "🚀"
   },
@@ -23,11 +23,10 @@ const slides = [
     title: "Content Management",
     subtitle: "& Web Edits",
     content: [
-      "Creating, editing, and organising articles efficiently",
+      "Creating / editing new products",
       "Working with categories and content hierarchy",
-      "Using the WYSIWYG editor for rich content creation",
-      "Managing media files and the Media Manager",
-      "Content scheduling and publishing workflows"
+      "Using the WYSIWYG editor / builder for rich content creation",
+      "Managing media files and the Media Manager",      
     ],
     icon: "📝"
   },
@@ -38,10 +37,8 @@ const slides = [
     content: [
       "J2Store dashboard overview and key features",
       "Understanding store configuration and settings",
-      "Payment gateway setup and management",
-      "Shipping methods and tax configuration",
-      "Order management and customer communications"
-    ],
+      "Payment gateway setup and management",     
+          ],
     icon: "🛒"
   },
   {
@@ -49,8 +46,8 @@ const slides = [
     title: "Simple Page",
     subtitle: "Creation",
     content: [
-      "Step-by-step guide to creating new articles",
-      "Choosing the right category and access level",
+      "Quick guide on creating new landing page for a new line",
+      "Choosing the right category",
       "Adding images, links, and multimedia content",
       "SEO-friendly URLs and alias configuration",
       "Preview and publish workflow"
@@ -63,11 +60,8 @@ const slides = [
     subtitle: "Generation",
     content: [
       "Using Akeeba Backup for complete site backups",
-      "Understanding backup components: files + database",
-      "Scheduling automatic backups for peace of mind",
-      "Downloading and storing backups securely",
-      "Restore procedures and disaster recovery"
-    ],
+       "Downloading and storing backups",
+          ],
     icon: "💾"
   },
   {
@@ -77,10 +71,8 @@ const slides = [
     content: [
       "Locating existing images in the Media Manager",
       "Best practices for image optimisation",
-      "Replacing images whilst maintaining links",
       "Supported formats and size recommendations",
-      "Bulk image management techniques"
-    ],
+          ],
     icon: "🖼️"
   },
   {
@@ -115,10 +107,7 @@ const slides = [
     subtitle: "& Management",
     content: [
       "Safe deletion procedures and considerations",
-      "Unpublishing vs permanent deletion",
-      "Impact on orders and customer history",
-      "Archiving products for future reference",
-      "Bulk product management operations"
+      "Unpublishing vs permanent deletion",     
     ],
     icon: "🗑️"
   },
@@ -130,8 +119,7 @@ const slides = [
       "Assessing current page performance and issues",
       "Content restructuring strategies",
       "Updating layouts and visual elements",
-      "Improving user experience and navigation",
-      "A/B testing and measuring improvements"
+      "Improving user experience and navigation",      
     ],
     icon: "🎨"
   },
@@ -143,9 +131,7 @@ const slides = [
       "Planning page structure and content hierarchy",
       "Creating articles with custom layouts",
       "Assigning to menus for navigation",
-      "Setting access levels and permissions",
-      "Mobile responsiveness considerations"
-    ],
+          ],
     icon: "🌐"
   },
   {
@@ -161,21 +147,9 @@ const slides = [
     ],
     icon: "📁"
   },
+  
   {
     id: 13,
-    title: "Checkout Process",
-    subtitle: "Issue Resolution",
-    content: [
-      "Common checkout problems and diagnostics",
-      "Payment gateway troubleshooting",
-      "Cart and session issues resolution",
-      "Testing checkout flow end-to-end",
-      "Customer notification and email configuration"
-    ],
-    icon: "🔧"
-  },
-  {
-    id: 14,
     title: "Menu Structure",
     subtitle: "& Restructuring",
     content: [
@@ -188,7 +162,7 @@ const slides = [
     icon: "📋"
   },
   {
-    id: 15,
+    id: 14,
     title: "Device Review",
     subtitle: "Quarterly Checks",
     content: [
@@ -201,7 +175,7 @@ const slides = [
     icon: "📱"
   },
   {
-    id: 16,
+    id: 15,
     title: "Meta Titles",
     subtitle: "& Descriptions",
     content: [
@@ -214,7 +188,7 @@ const slides = [
     icon: "🔍"
   },
   {
-    id: 17,
+    id: 16,
     title: "Robots Tags",
     subtitle: "& Indexing Control",
     content: [
@@ -227,16 +201,13 @@ const slides = [
     icon: "🤖"
   },
   {
-    id: 18,
+    id: 17,
     title: "Troubleshooting",
     subtitle: "Common Issues",
     content: [
-      "White screen of death: causes and fixes",
-      "Database connection errors resolution",
       "Extension conflicts and debugging",
       "Cache clearing and performance issues",
-      "When to seek professional support"
-    ],
+         ],
     icon: "🛠️"
   }
 ];
@@ -257,15 +228,16 @@ export default function JoomlaTrainingPresentation() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState('next');
 
-  const goToSlide = (index) => {
-    if (isAnimating || index === currentSlide) return;
-    setDirection(index > currentSlide ? 'next' : 'prev');
-    setIsAnimating(true);
-    setTimeout(() => {
-      setCurrentSlide(index);
-      setIsAnimating(false);
-    }, 300);
-  };
+ // Added ': number' to define the type of the index parameter
+const goToSlide = (index: number) => {
+  if (isAnimating || index === currentSlide) return;
+  setDirection(index > currentSlide ? 'next' : 'prev');
+  setIsAnimating(true);
+  setTimeout(() => {
+    setCurrentSlide(index);
+    setIsAnimating(false);
+  }, 300);
+};
 
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
