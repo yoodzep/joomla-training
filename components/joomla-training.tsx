@@ -1,0 +1,512 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+
+
+
+const slides = [
+  {
+    id: 1,
+    title: "Joomla 3",
+    subtitle: "Introduction & Fundamentals",
+    content: [
+      "Understanding the Joomla 3 architecture and core concepts",
+      "Navigating the administrator dashboard with confidence",
+      "User roles, permissions, and access levels explained",
+      "Essential settings and global configuration overview",
+      "Best practices for maintaining your Joomla installation"
+    ],
+    icon: "🚀"
+  },
+  {
+    id: 2,
+    title: "Content Management",
+    subtitle: "& Web Edits",
+    content: [
+      "Creating, editing, and organising articles efficiently",
+      "Working with categories and content hierarchy",
+      "Using the WYSIWYG editor for rich content creation",
+      "Managing media files and the Media Manager",
+      "Content scheduling and publishing workflows"
+    ],
+    icon: "📝"
+  },
+  {
+    id: 3,
+    title: "J2Store",
+    subtitle: "Specific Training",
+    content: [
+      "J2Store dashboard overview and key features",
+      "Understanding store configuration and settings",
+      "Payment gateway setup and management",
+      "Shipping methods and tax configuration",
+      "Order management and customer communications"
+    ],
+    icon: "🛒"
+  },
+  {
+    id: 4,
+    title: "Simple Page",
+    subtitle: "Creation",
+    content: [
+      "Step-by-step guide to creating new articles",
+      "Choosing the right category and access level",
+      "Adding images, links, and multimedia content",
+      "SEO-friendly URLs and alias configuration",
+      "Preview and publish workflow"
+    ],
+    icon: "📄"
+  },
+  {
+    id: 5,
+    title: "Website Backup",
+    subtitle: "Generation",
+    content: [
+      "Using Akeeba Backup for complete site backups",
+      "Understanding backup components: files + database",
+      "Scheduling automatic backups for peace of mind",
+      "Downloading and storing backups securely",
+      "Restore procedures and disaster recovery"
+    ],
+    icon: "💾"
+  },
+  {
+    id: 6,
+    title: "Update Images",
+    subtitle: "On Your Website",
+    content: [
+      "Locating existing images in the Media Manager",
+      "Best practices for image optimisation",
+      "Replacing images whilst maintaining links",
+      "Supported formats and size recommendations",
+      "Bulk image management techniques"
+    ],
+    icon: "🖼️"
+  },
+  {
+    id: 7,
+    title: "Adding New",
+    subtitle: "Products",
+    content: [
+      "Creating product entries in J2Store",
+      "Setting product types: simple, variable, configurable",
+      "Adding product images and gallery",
+      "Configuring pricing, inventory, and shipping",
+      "Product options and variants setup"
+    ],
+    icon: "➕"
+  },
+  {
+    id: 8,
+    title: "Updating Products",
+    subtitle: "Price, SKU, Image & Description",
+    content: [
+      "Accessing and editing existing products",
+      "Modifying pricing and special offers",
+      "Updating SKU codes and inventory tracking",
+      "Replacing product images efficiently",
+      "Revising descriptions for better conversions"
+    ],
+    icon: "✏️"
+  },
+  {
+    id: 9,
+    title: "Product Deletion",
+    subtitle: "& Management",
+    content: [
+      "Safe deletion procedures and considerations",
+      "Unpublishing vs permanent deletion",
+      "Impact on orders and customer history",
+      "Archiving products for future reference",
+      "Bulk product management operations"
+    ],
+    icon: "🗑️"
+  },
+  {
+    id: 10,
+    title: "Page Revamp",
+    subtitle: "& Redesign",
+    content: [
+      "Assessing current page performance and issues",
+      "Content restructuring strategies",
+      "Updating layouts and visual elements",
+      "Improving user experience and navigation",
+      "A/B testing and measuring improvements"
+    ],
+    icon: "🎨"
+  },
+  {
+    id: 11,
+    title: "New Webpage",
+    subtitle: "Creation",
+    content: [
+      "Planning page structure and content hierarchy",
+      "Creating articles with custom layouts",
+      "Assigning to menus for navigation",
+      "Setting access levels and permissions",
+      "Mobile responsiveness considerations"
+    ],
+    icon: "🌐"
+  },
+  {
+    id: 12,
+    title: "Categories",
+    subtitle: "& New Ranges",
+    content: [
+      "Understanding category architecture in Joomla",
+      "Creating parent and child categories",
+      "J2Store product categories setup",
+      "Category images and descriptions",
+      "Organising products into logical ranges"
+    ],
+    icon: "📁"
+  },
+  {
+    id: 13,
+    title: "Checkout Process",
+    subtitle: "Issue Resolution",
+    content: [
+      "Common checkout problems and diagnostics",
+      "Payment gateway troubleshooting",
+      "Cart and session issues resolution",
+      "Testing checkout flow end-to-end",
+      "Customer notification and email configuration"
+    ],
+    icon: "🔧"
+  },
+  {
+    id: 14,
+    title: "Menu Structure",
+    subtitle: "& Restructuring",
+    content: [
+      "Understanding Joomla menu architecture",
+      "Creating and managing menu items",
+      "Menu module positions and display",
+      "Dropdown menus and nested navigation",
+      "Mobile menu considerations"
+    ],
+    icon: "📋"
+  },
+  {
+    id: 15,
+    title: "Device Review",
+    subtitle: "Quarterly Checks",
+    content: [
+      "Desktop browser testing checklist",
+      "Tablet and mobile responsiveness verification",
+      "Cross-browser compatibility checks",
+      "Performance testing on different devices",
+      "Documenting and prioritising fixes"
+    ],
+    icon: "📱"
+  },
+  {
+    id: 16,
+    title: "Meta Titles",
+    subtitle: "& Descriptions",
+    content: [
+      "Understanding meta data importance for SEO",
+      "Writing compelling meta titles (under 60 characters)",
+      "Crafting effective meta descriptions (under 160)",
+      "Article and menu item meta configuration",
+      "Using SEO extensions for bulk management"
+    ],
+    icon: "🔍"
+  },
+  {
+    id: 17,
+    title: "Robots Tags",
+    subtitle: "& Indexing Control",
+    content: [
+      "Understanding robots meta directives",
+      "Index vs noindex: when to use each",
+      "Follow vs nofollow link directives",
+      "Configuring robots.txt in Joomla",
+      "Preventing duplicate content indexing"
+    ],
+    icon: "🤖"
+  },
+  {
+    id: 18,
+    title: "Troubleshooting",
+    subtitle: "Common Issues",
+    content: [
+      "White screen of death: causes and fixes",
+      "Database connection errors resolution",
+      "Extension conflicts and debugging",
+      "Cache clearing and performance issues",
+      "When to seek professional support"
+    ],
+    icon: "🛠️"
+  }
+];
+
+// KSHE Training colour palette
+const colors = {
+  primary: '#7B8CDE',      // Lavender/periwinkle blue (main text)
+  secondary: '#F5A4A4',    // Coral pink (decorative)
+  accent: '#9BD4E4',       // Light blue (waves/accents)
+  background: '#FFFFFF',   // White background
+  textDark: '#5B6BC0',     // Darker lavender for headings
+  textLight: '#8E99C9',    // Lighter lavender for secondary text
+  coral: '#E8847C',        // Darker coral for emphasis
+};
+
+export default function JoomlaTrainingPresentation() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState('next');
+
+  const goToSlide = (index) => {
+    if (isAnimating || index === currentSlide) return;
+    setDirection(index > currentSlide ? 'next' : 'prev');
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentSlide(index);
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  const nextSlide = () => {
+    if (currentSlide < slides.length - 1) {
+      goToSlide(currentSlide + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (currentSlide > 0) {
+      goToSlide(currentSlide - 1);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentSlide, isAnimating]);
+
+  const slide = slides[currentSlide];
+
+  return (
+    <div className="min-h-screen bg-white text-slate-700 overflow-hidden relative font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+        
+        * { font-family: 'Nunito', sans-serif; }
+        .font-mono { font-family: 'Space Mono', monospace; }
+        
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounceSubtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes wave {
+          0%, 100% { transform: translateX(0) translateY(0); }
+          25% { transform: translateX(5px) translateY(-3px); }
+          75% { transform: translateX(-5px) translateY(3px); }
+        }
+        
+        .animate-bounce-subtle { animation: bounceSubtle 3s ease-in-out infinite; }
+        .animate-item { animation: fadeSlideIn 0.6s ease-out forwards; opacity: 0; }
+        .animate-wave { animation: wave 4s ease-in-out infinite; }
+      `}</style>
+      
+      {/* Decorative map elements - Philippines */}
+      <svg className="absolute top-12 right-1/3 w-24 h-32 opacity-60" viewBox="0 0 100 140" fill="none">
+        <path d="M50 10 C60 20, 70 15, 65 30 C60 45, 75 50, 70 65 C65 80, 55 75, 50 90 C45 75, 35 80, 30 65 C25 50, 40 45, 35 30 C30 15, 40 20, 50 10" fill={colors.secondary} opacity="0.7"/>
+        <ellipse cx="45" cy="110" rx="12" ry="8" fill={colors.secondary} opacity="0.5"/>
+        <ellipse cx="60" cy="125" rx="8" ry="5" fill={colors.secondary} opacity="0.4"/>
+      </svg>
+      
+      {/* Decorative map elements - Australia */}
+      <svg className="absolute bottom-24 right-12 w-40 h-32 opacity-50" viewBox="0 0 160 130">
+        <path d="M20 50 C30 30, 60 25, 90 30 C120 35, 140 50, 145 70 C150 90, 130 110, 100 115 C70 120, 40 110, 25 90 C10 70, 10 70, 20 50" fill={colors.accent} stroke={colors.primary} strokeWidth="2" opacity="0.6"/>
+        <ellipse cx="130" cy="45" rx="15" ry="12" fill={colors.accent} opacity="0.4"/>
+      </svg>
+      
+      {/* Wave decorations */}
+      <svg className="absolute bottom-32 left-8 w-16 h-8 animate-wave" viewBox="0 0 60 20" fill="none">
+        <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
+      </svg>
+      <svg className="absolute bottom-20 left-24 w-12 h-6 animate-wave" style={{animationDelay: '0.5s'}} viewBox="0 0 60 20" fill="none">
+        <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
+      </svg>
+      <svg className="absolute top-1/2 right-32 w-10 h-5 animate-wave" style={{animationDelay: '1s'}} viewBox="0 0 60 20" fill="none">
+        <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
+      </svg>
+      <svg className="absolute bottom-48 right-1/4 w-14 h-7 animate-wave" style={{animationDelay: '1.5s'}} viewBox="0 0 60 20" fill="none">
+        <path d="M0 10 Q15 0, 30 10 T60 10" stroke={colors.accent} strokeWidth="3" strokeLinecap="round" fill="none"/>
+      </svg>
+
+      {/* Header with Yoonet logo style */}
+      <header className="relative z-10 flex items-center justify-between px-4 py-4 md:px-8 md:py-5">
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Y logo similar to Yoonet branding */}
+          <div className="flex items-end">
+            <span className="text-3xl md:text-4xl font-bold" style={{color: colors.primary}}>Y</span>
+            <span className="w-2 h-2 rounded-full mb-1 ml-0.5" style={{backgroundColor: colors.secondary}}></span>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 md:gap-4">
+          <span className="text-xs font-mono" style={{color: colors.textLight}}>
+            {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+          </span>
+          <div className="h-1.5 w-16 md:w-24 rounded-full overflow-hidden" style={{backgroundColor: `${colors.primary}20`}}>
+            <div 
+              className="h-full rounded-full transition-all duration-500 ease-out"
+              style={{ 
+                width: `${((currentSlide + 1) / slides.length) * 100}%`,
+                backgroundColor: colors.primary
+              }}
+            />
+          </div>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col lg:flex-row min-h-[calc(100vh-140px)] px-4 md:px-8 lg:px-16 py-4 md:py-8">
+        {/* Left side - Title */}
+        <div className="flex-1 flex flex-col justify-center mb-6 lg:mb-0 lg:pr-10">
+          <div 
+            className={`transition-all duration-500 ${isAnimating ? (direction === 'next' ? 'opacity-0 -translate-x-8' : 'opacity-0 translate-x-8') : 'opacity-100 translate-x-0'}`}
+          >
+            {/* Icon */}
+            <div className="text-4xl md:text-5xl lg:text-6xl mb-4 animate-bounce-subtle">
+              {slide.icon}
+            </div>
+
+            {/* Module label */}
+            <div 
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider mb-4"
+              style={{ backgroundColor: `${colors.secondary}30`, color: colors.coral }}
+            >
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colors.secondary }} />
+              MODULE {String(slide.id).padStart(2, '0')}
+            </div>
+
+            {/* Title */}
+            <h1 
+              className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-extrabold leading-none tracking-tight mb-2"
+              style={{color: colors.primary}}
+            >
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <h2 
+                className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light tracking-tight"
+                style={{ color: colors.textLight }}
+              >
+                {slide.subtitle}
+              </h2>
+            )}
+          </div>
+        </div>
+
+        {/* Right side - Content */}
+        <div className="flex-1 flex flex-col justify-center lg:pl-10 lg:border-l" style={{borderColor: `${colors.primary}20`}}>
+          <div 
+            className={`transition-all duration-500 delay-100 ${isAnimating ? (direction === 'next' ? 'opacity-0 translate-x-8' : 'opacity-0 -translate-x-8') : 'opacity-100 translate-x-0'}`}
+          >
+            <h3 className="text-xs font-bold tracking-widest mb-5" style={{color: colors.textLight}}>
+              WHAT YOU'LL LEARN
+            </h3>
+            <ul className="space-y-3 md:space-y-4">
+              {slide.content.map((item, index) => (
+                <li 
+                  key={index}
+                  className="flex items-start gap-3 group animate-item"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <span 
+                    className="flex-shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center text-xs font-bold transition-all duration-300 group-hover:scale-110"
+                    style={{ 
+                      backgroundColor: `${colors.secondary}25`,
+                      color: colors.coral
+                    }}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span 
+                    className="text-sm md:text-base lg:text-lg leading-relaxed pt-1 transition-colors duration-300"
+                    style={{color: colors.textDark}}
+                  >
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-white via-white/95 to-transparent pt-10 pb-4 px-4 md:px-8">
+        <div className="flex items-center justify-between max-w-6xl mx-auto">
+          {/* Prev/Next buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={prevSlide}
+              disabled={currentSlide === 0}
+              className="w-11 h-11 md:w-12 md:h-12 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center group border-2"
+              style={{ 
+                borderColor: colors.primary,
+                color: colors.primary
+              }}
+            >
+              <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={nextSlide}
+              disabled={currentSlide === slides.length - 1}
+              className="w-11 h-11 md:w-12 md:h-12 rounded-xl text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center group hover:brightness-110"
+              style={{ backgroundColor: colors.primary }}
+            >
+              <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Slide dots */}
+          <div className="hidden md:flex items-center gap-1.5 flex-wrap justify-center max-w-sm">
+            {slides.map((s, index) => (
+              <button
+                key={s.id}
+                onClick={() => goToSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentSlide ? 'w-6' : 'hover:opacity-80'
+                }`}
+                style={{ 
+                  backgroundColor: index === currentSlide ? colors.primary : `${colors.primary}30`
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Keyboard hint */}
+          <div className="hidden lg:flex items-center gap-1.5 text-xs" style={{color: colors.textLight}}>
+            <kbd className="px-2 py-1 rounded font-mono text-xs" style={{backgroundColor: `${colors.primary}15`}}>←</kbd>
+            <kbd className="px-2 py-1 rounded font-mono text-xs" style={{backgroundColor: `${colors.primary}15`}}>→</kbd>
+            <span className="ml-1">Navigate</span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  );
+}
