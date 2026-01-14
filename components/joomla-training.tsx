@@ -224,7 +224,7 @@ export default function JoomlaTrainingPresentation() {
   const slide = slides[currentSlide];
 
   return (
-    <div className="min-h-screen bg-white text-slate-700 overflow-hidden relative font-sans">
+    <div className="min-h-screen bg-white text-slate-700 overflow-hidden relative font-sans" >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
         
