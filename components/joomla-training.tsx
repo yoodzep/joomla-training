@@ -274,13 +274,14 @@ export default function JoomlaTrainingPresentation() {
       </svg>
 
       <header className="relative z-10 flex items-center justify-between px-4 py-4 md:px-8 md:py-5">
-        <div className="flex items-center gap-2 md:gap-3">
-         <img 
+       <div className="flex items-center gap-2 md:gap-3">
+    <img 
       src="https://cdn.prod.website-files.com/64599cdb3f68926882696e2b/6865bd5ebb0f190ad15ffc46_yoonet-logo.webp" 
       alt="Yoonet" 
-      className="h-8 md:h-10 w-auto" 
+      /* Updated heights: h-12 (48px) on mobile, h-16 (64px) on desktop */
+      className="h-12 md:h-16 w-auto object-contain" 
     />
-        </div>
+  </div>
 
         
         <div className="flex items-center gap-2 md:gap-4">
