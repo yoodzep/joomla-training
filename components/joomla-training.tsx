@@ -18,7 +18,7 @@ const slides = [
   {
     id: 2,
     title: "Content Management",
-    subtitle: "& Web Edits",
+    subtitle: "Web Updates",
     content: [
       "Creating / editing new products",
       "Working with categories and content hierarchy",
@@ -33,20 +33,19 @@ const slides = [
     subtitle: "Specific Training",
     content: [
       "J2Store dashboard overview and key features",
-      "Understanding store configuration and settings",
-      "Payment gateway setup and management",     
+      "Understanding store configuration and settings",        
     ],
     icon: "🛒"
   },
   {
     id: 4,
-    title: "Simple Page",
+    title: "Custom Page",
     subtitle: "Creation",
     content: [
       "Quick guide on creating new landing page for a new line",
-      "Choosing the right category",
-      "Adding images, links, and multimedia content",
+            "Adding images, links, and multimedia content",
       "SEO-friendly URLs and alias configuration",
+      "Adding of hidden menu to add page",
       "Preview and publish workflow"
     ],
     icon: "📄"
@@ -79,9 +78,10 @@ const slides = [
     content: [
       "Creating product entries in J2Store",
       "Setting product types: simple, variable, configurable",
-      "Adding product images and gallery",
+      "Adding product images",
       "Configuring pricing, inventory, and shipping",
       "Product options and variants setup"
+      
     ],
     icon: "➕"
   },
@@ -92,8 +92,8 @@ const slides = [
     content: [
       "Accessing and editing existing products",
       "Modifying pricing and special offers",
-      "Updating SKU codes and inventory tracking",
-      "Replacing product images efficiently",
+      "Updating SKU codes",
+      "Replacing product images",
       "Revising descriptions for better conversions"
     ],
     icon: "✏️"
@@ -108,44 +108,9 @@ const slides = [
     ],
     icon: "🗑️"
   },
-  {
+ 
+     {
     id: 10,
-    title: "Page Revamp",
-    subtitle: "& Redesign",
-    content: [
-      "Assessing current page performance and issues",
-      "Content restructuring strategies",
-      "Updating layouts and visual elements",
-      "Improving user experience and navigation",      
-    ],
-    icon: "🎨"
-  },
-  {
-    id: 11,
-    title: "New Webpage",
-    subtitle: "Creation",
-    content: [
-      "Planning page structure and content hierarchy",
-      "Creating articles with custom layouts",
-      "Assigning to menus for navigation",
-    ],
-    icon: "🌐"
-  },
-  {
-    id: 12,
-    title: "Categories",
-    subtitle: "& New Ranges",
-    content: [
-      "Understanding category architecture in Joomla",
-      "Creating parent and child categories",
-      "J2Store product categories setup",
-      "Category images and descriptions",
-      "Organising products into logical ranges"
-    ],
-    icon: "📁"
-  },
-  {
-    id: 13,
     title: "Menu Structure",
     subtitle: "& Restructuring",
     content: [
@@ -153,25 +118,23 @@ const slides = [
       "Creating and managing menu items",
       "Menu module positions and display",
       "Dropdown menus and nested navigation",
-      "Mobile menu considerations"
-    ],
+         ],
     icon: "📋"
   },
   {
-    id: 14,
+    id: 11,
     title: "Device Review",
     subtitle: "Quarterly Checks",
     content: [
       "Desktop browser testing checklist",
       "Tablet and mobile responsiveness verification",
-      "Cross-browser compatibility checks",
-      "Performance testing on different devices",
+            "Performance testing on different devices",
       "Documenting and prioritising fixes"
     ],
     icon: "📱"
   },
   {
-    id: 15,
+    id: 12,
     title: "Meta Titles",
     subtitle: "& Descriptions",
     content: [
@@ -179,16 +142,14 @@ const slides = [
       "Writing compelling meta titles (under 60 characters)",
       "Crafting effective meta descriptions (under 160)",
       "Article and menu item meta configuration",
-      "Using SEO extensions for bulk management"
-    ],
+          ],
     icon: "🔍"
   },
   {
-    id: 16,
+    id: 13,
     title: "Robots Tags",
     subtitle: "& Indexing Control",
     content: [
-      "Understanding robots meta directives",
       "Index vs noindex: when to use each",
       "Follow vs nofollow link directives",
       "Configuring robots.txt in Joomla",
@@ -197,7 +158,7 @@ const slides = [
     icon: "🤖"
   },
   {
-    id: 17,
+    id: 14,
     title: "Troubleshooting",
     subtitle: "Common Issues",
     content: [
