@@ -166,6 +166,18 @@ const slides = [
       "Cache clearing and performance issues",
     ],
     icon: "🛠️"
+  },
+  {
+    id: 15,
+    title: "Thank You",
+    subtitle: "Questions & Next Steps",
+    content: [
+      "Practice makes perfect — don't hesitate to explore!",
+      "Reach out to Yoonet support for any assistance",
+      "Documentation and resources available on request",
+      "We're here to help you succeed 🎉"
+    ],
+    icon: "🙏"
   }
 ];
 
