@@ -346,9 +346,11 @@ export default function JoomlaTrainingPresentation() {
 
         <div className="flex-1 flex flex-col justify-center lg:pl-10 lg:border-l" style={{borderColor: `${colors.primary}20`}}>
           <div className={`transition-all duration-500 delay-100 ${isAnimating ? (direction === 'next' ? 'opacity-0 translate-x-8' : 'opacity-0 -translate-x-8') : 'opacity-100 translate-x-0'}`}>
-            <h3 className="text-xs font-bold tracking-widest mb-5" style={{color: colors.textLight}}>
-              WHAT YOU'LL LEARN
-            </h3>
+            {slide.id !== 15 && (
+              <h3 className="text-xs font-bold tracking-widest mb-5" style={{color: colors.textLight}}>
+                WHAT YOU'LL LEARN
+              </h3>
+            )}
             <ul className="space-y-3 md:space-y-4">
               {slide.content.map((item, index) => (
                 <li 
