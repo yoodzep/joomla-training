@@ -80,7 +80,9 @@ const slides = [
       "Setting product types: simple, variable, configurable",
       "Adding product images",
       "Configuring pricing, inventory, and shipping",
-      "Product options and variants setup"
+      "Product options and variants setup",
+      "Using the WYSIWYG editor / builder for rich content creation",
+      "Managing media files and the Media Manager"
 
     ],
     icon: "➕"
@@ -141,7 +143,6 @@ const slides = [
       "Understanding meta data importance for SEO",
       "Writing compelling meta titles (under 60 characters)",
       "Crafting effective meta descriptions (under 160)",
-      "Article and menu item meta configuration",
           ],
     icon: "🔍"
   },
@@ -192,6 +193,12 @@ const colors = {
 };
 
 export default function JoomlaTrainingPresentation() {
+  const slideOrder = [0, 11, 12, 3, 5, 2, 6, 7, 10, 14];
+  const orderedSlides = slideOrder.map((sourceIndex, index) => ({
+    ...slides[sourceIndex],
+    id: index + 1,
+  }));
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
@@ -209,10 +216,10 @@ export default function JoomlaTrainingPresentation() {
   }, [currentSlide, isAnimating]);
 
   const nextSlide = useCallback(() => {
-    if (currentSlide < slides.length - 1) {
+    if (currentSlide < orderedSlides.length - 1) {
       goToSlide(currentSlide + 1);
     }
-  }, [currentSlide, goToSlide]);
+  }, [currentSlide, goToSlide, orderedSlides.length]);
 
   const prevSlide = useCallback(() => {
     if (currentSlide > 0) {
@@ -237,7 +244,7 @@ export default function JoomlaTrainingPresentation() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  const slide = slides[currentSlide];
+  const slide = orderedSlides[currentSlide];
 
   return (
     <div className="min-h-screen bg-white text-slate-700 overflow-hidden relative font-sans">
@@ -300,13 +307,13 @@ export default function JoomlaTrainingPresentation() {
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{
-                    width: `${((currentSlide + 1) / slides.length) * 100}%`,
+                    width: `${((currentSlide + 1) / orderedSlides.length) * 100}%`,
                     backgroundColor: colors.primary
                   }}
                 />
               </div>
               <span className="text-xs font-mono font-semibold" style={{ color: colors.textLight }}>
-                {Math.round(((currentSlide + 1) / slides.length) * 100)}%
+                {Math.round(((currentSlide + 1) / orderedSlides.length) * 100)}%
               </span>
             </div>
           </div>
@@ -318,7 +325,7 @@ export default function JoomlaTrainingPresentation() {
                 Training Modules
               </span>
             </div>
-            {slides.map((s, index) => (
+            {orderedSlides.map((s, index) => (
               <button
                 key={s.id}
                 onClick={() => goToSlide(index)}
@@ -392,13 +399,13 @@ export default function JoomlaTrainingPresentation() {
           </button>
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono font-semibold" style={{ color: colors.textLight }}>
-              {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+              {String(currentSlide + 1).padStart(2, '0')} / {String(orderedSlides.length).padStart(2, '0')}
             </span>
             <div className="h-1.5 w-20 rounded-full overflow-hidden" style={{ backgroundColor: `${colors.primary}15` }}>
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{
-                  width: `${((currentSlide + 1) / slides.length) * 100}%`,
+                  width: `${((currentSlide + 1) / orderedSlides.length) * 100}%`,
                   backgroundColor: colors.primary
                 }}
               />
@@ -511,7 +518,7 @@ export default function JoomlaTrainingPresentation() {
 
             {/* Progress dots - desktop only */}
             <div className="hidden md:flex items-center gap-1.5">
-              {slides.map((s, index) => (
+              {orderedSlides.map((s, index) => (
                 <button
                   key={s.id}
                   onClick={() => goToSlide(index)}
@@ -528,12 +535,12 @@ export default function JoomlaTrainingPresentation() {
 
             <button
               onClick={nextSlide}
-              disabled={currentSlide === slides.length - 1}
+              disabled={currentSlide === orderedSlides.length - 1}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 group hover:brightness-110"
               style={{ backgroundColor: colors.primary }}
             >
               <span className="font-semibold text-sm hidden sm:inline">
-                {currentSlide === slides.length - 1 ? 'Complete' : 'Next'}
+                {currentSlide === orderedSlides.length - 1 ? 'Complete' : 'Next'}
               </span>
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
